@@ -19,6 +19,7 @@ public class Main {
     new Class("College English", "2023", "S2", "ENG", 101);
     new Class("Server Side Scripting", "2023", "S1", "compsci", 382);
     new Class("Discrete Structures", "2023", "S1", "CompSci", 215);
+    new Class("Swagger", "2025", "S1", "Swagg", 999);
     Student.printStudents();
     // new GradesGUI();
     new LoginGUI();
