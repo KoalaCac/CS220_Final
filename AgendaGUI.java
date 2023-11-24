@@ -58,7 +58,13 @@ public class AgendaGUI implements ActionListener {
         header.add(dateLabel);
         panel.add(header, BorderLayout.NORTH);
 
-        tableModel = new DefaultTableModel();
+        tableModel = new DefaultTableModel() {
+
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+
+        };
         table = new JTable(tableModel);
         panel.add(new JScrollPane(table), BorderLayout.CENTER);
 
