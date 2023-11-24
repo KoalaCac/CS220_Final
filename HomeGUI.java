@@ -78,6 +78,8 @@ public class HomeGUI implements ActionListener {
         arrGrades.add(98.4);
         arrGrades.add(98.3);
         Student.getAsUser().setGrades(arrGrades);
+
+        Assignment as1 = new Assignment("COMPSCI220", "Java Collections Framework Quiz", 0);
         
 
         JLabel titleAnnounce = new JLabel("Announcements");
@@ -121,33 +123,6 @@ public class HomeGUI implements ActionListener {
 
     }
 
-    // public void actionPerformed(ActionEvent e) {
-    //     if (e.getActionCommand() == Actions.ACCOUNTINFO.name()) {
-
-    //     }
-    //     else if (e.getActionCommand() == Actions.GRADES.name()) {
-
-    //     }
-    //     else if (e.getActionCommand() == Actions.ATTENDANCE.name()) {
-
-    //     }
-    //     else if (e.getActionCommand() ==  Actions.CALENDAR.name()) {
-
-    //     }
-    //     else if (e.getActionCommand() ==  Actions.SCHEDULE.name()) {
-
-    //     }
-    //     else if (e.getActionCommand() == Actions.LOGOUT.name()) {
-    //         frame.dispose();
-    //         try { 
-    //             new LoginGUI();
-    //         }
-    //         catch (IOException ioe) {
-    //         }
-    //     }
-        
-        
-    // }
 
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
@@ -165,15 +140,9 @@ public class HomeGUI implements ActionListener {
                 frame.dispose();
                 new GradesGUI();
                 break;
-            case ATTENDANCE:
-                
-                break;
             case AGENDA:
                 frame.dispose();
                 new AgendaGUI();
-                break;
-            case SCHEDULE:
-                
                 break;
             case LOGOUT:
                 frame.dispose();
@@ -184,7 +153,6 @@ public class HomeGUI implements ActionListener {
                 }
                 break;
             default:
-                
                 break;
         }
     }

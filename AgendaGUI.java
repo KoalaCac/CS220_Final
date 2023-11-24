@@ -15,6 +15,7 @@ public class AgendaGUI implements ActionListener {
     JTable table;
     JLabel dateLabel;
     DefaultTableModel tableModel;
+    String cellVal;
     int monthInd;
     
     
@@ -105,9 +106,12 @@ public class AgendaGUI implements ActionListener {
 
         int row = 0;
         int col = firstDay-1;
-
         for (int i = 0; i <= yearMonth.lengthOfMonth(); i++) {
-            tableModel.setValueAt(i, row, col); 
+            cellVal = i + "\n";
+            for (Event e : Event.getEventList()) {
+                if (e.getDateCreated().toString().equals(currentDate.getYear() + "-" + currentDate.getMonthValue() + ""))
+            }
+            tableModel.setValueAt(cellVal, row, col); 
             table.getColumnModel().getColumn(col).setCellRenderer(centerRenderer);
             table.setRowHeight(row, 100);
             col++;
