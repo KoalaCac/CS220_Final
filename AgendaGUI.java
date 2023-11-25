@@ -107,11 +107,13 @@ public class AgendaGUI implements ActionListener {
         int row = 0;
         int col = firstDay-1;
         for (int i = 0; i <= yearMonth.lengthOfMonth(); i++) {
-            cellVal = i + "\n";
+            cellVal = "<html>" + i + "<br/>";
             for (Event e : Event.getEventList()) {
-                if (e.getDateCreated().toString().equals(currentDate.getYear() + "-" + currentDate.getMonthValue() + ""))
+                if (e.getDateCreated().toString().equals(String.format("%02d", currentDate.getYear()) + "-" + String.format("%02d", currentDate.getMonthValue()) + "-" + String.format("%02d", i))) {
+                    cellVal = cellVal + e.toString() + "<br/>";
+                }
             }
-            tableModel.setValueAt(cellVal, row, col); 
+            tableModel.setValueAt(cellVal + "<html>", row, col); 
             table.getColumnModel().getColumn(col).setCellRenderer(centerRenderer);
             table.setRowHeight(row, 100);
             col++;

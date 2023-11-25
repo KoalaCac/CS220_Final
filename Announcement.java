@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Announcement extends Event {
@@ -13,6 +14,14 @@ public class Announcement extends Event {
         announceList.add(this);
     }
 
+    public Announcement(String user, String text, String changeDate) {
+        super();
+        setDateCreated(LocalDate.parse(changeDate));
+        this.user = Student.findUser(user);
+        this.text = "<html>" + text + "<br/>-" + this.user.getName() + "<html>";
+        announceList.add(this);
+    }
+
     public static ArrayList<Announcement> getAnnounceList() {
         return announceList;
     }
@@ -23,6 +32,11 @@ public class Announcement extends Event {
 
     public Student getUser() {
         return user;
+    }
+
+    @Override
+    public String toString() {
+        return user.getName() + " sent an announcement";
     }
 
 

@@ -4,7 +4,7 @@ import java.time.*;
 public class Event {
     
     private static ArrayList<Event> eventList = new ArrayList<Event>();
-    LocalDate dateCreated;
+    private LocalDate dateCreated;
 
     public Event() {
         eventList.add(this);
@@ -17,6 +17,9 @@ public class Event {
 
     public LocalDate getDateCreated() {
         return dateCreated;
+    }
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     
