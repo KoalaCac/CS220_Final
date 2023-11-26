@@ -8,6 +8,14 @@ public class Assignment extends Event {
     private String name;
     private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
     
+    public Assignment(String whichClass, String name) {
+        super();
+        this.whichClass = whichClass;
+        this.name = name;
+        assignments.add(this);
+    }
+
+
     public Assignment(String whichClass, String name, double grade) {
         super();
         this.whichClass = whichClass;

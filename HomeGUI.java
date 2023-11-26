@@ -7,10 +7,8 @@ import java.util.ArrayList;
 
 public class HomeGUI implements ActionListener {
 
-    JFrame frame;
-    JPanel panel;
-
-    //Idea: Add arraylist of announcements objects and append to window
+    private JFrame frame;
+    private JPanel panel;
 
     private enum Actions {
         ACCOUNTINFO,
@@ -36,39 +34,44 @@ public class HomeGUI implements ActionListener {
         
         JButton button = new JButton("Your account");
         button.setActionCommand(Actions.ACCOUNTINFO.name());
-        button.setBounds(50, 10, 200, 25);
+        button.setBounds(50, 10, 150, 25);
         button.addActionListener(this);
         panel.add(button);
 
         JButton button2 = new JButton("Grades");
         button2.setActionCommand(Actions.GRADES.name());
-        button2.setBounds(270, 10, 200, 25);
+        button2.setBounds(410, 10, 150, 25);
         button2.addActionListener(this);
         panel.add(button2);
 
-        // JButton button3 = new JButton("Attendance");
-        // button3.setActionCommand(Actions.ATTENDANCE.name());
-        // button3.setBounds(350, 10, 120, 25);
-        // button3.addActionListener(this);
-        // panel.add(button3);
-
         JButton button5 = new JButton("Agenda");
         button5.setActionCommand(Actions.AGENDA.name());
-        button5.setBounds(500, 10, 200, 25);
+        button5.setBounds(590, 10, 150, 25);
         button5.addActionListener(this);
         panel.add(button5);
 
-        // JButton button6 = new JButton("Schedule");
-        // button6.setActionCommand(Actions.SCHEDULE.name());
-        // button6.setBounds(650, 10, 120, 25);
-        // button6.addActionListener(this);
-        // panel.add(button6);
 
         JButton button4 = new JButton("Log out");
         button4.setActionCommand(Actions.LOGOUT.name());
-        button4.setBounds(720, 10, 200, 25);
+        button4.setBounds(770, 10, 150, 25);
         button4.addActionListener(this);
         panel.add(button4);
+
+        String[] choices = { "New...", "Announcement", "Assignment", "Class" }; 
+        JComboBox<String> button6 = new JComboBox<String>(choices);
+        button6.setBounds(230, 10, 150, 25);
+
+        button6.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String selectedItem = (String) button6.getSelectedItem();
+                if (!selectedItem.equals("New...")) {new NewGUI(selectedItem); frame.dispose();}
+            }
+        });
+
+
+
+        panel.add(button6);
+
 
         //Debug
         ArrayList<Double> arrGrades = new ArrayList<>();
@@ -156,6 +159,4 @@ public class HomeGUI implements ActionListener {
                 break;
         }
     }
-
-    
 }
