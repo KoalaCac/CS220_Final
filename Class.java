@@ -7,20 +7,18 @@ public class Class {
     private String name;
     private String year;
     private String semester;
-    private String major;
-    private int number;
+    private String id;
 
-    public Class(String name, String year, String semester, String major, int number) {
+    public Class(String name, String year, String semester, String id) {
         this.name = name;
         this.year = year;
         this.semester = semester;
-        this.major = major;
-        this.number = number;
+        this.id = id;
         classesAll.add(this);
     }
 
     public String toString() {
-        return (major + number + "_" + semester + "_" + year).toUpperCase();
+        return "<html>" + (id + "_" + semester + "_" + year + "<br/>" + name).toUpperCase() + "<html>";
     }
 
     public static ArrayList<Class> getClassesAll() {
