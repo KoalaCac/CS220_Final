@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 public class Class {
     
-    private ArrayList<Student> usersInClass;
+    private ArrayList<Student> usersInClass = new ArrayList<>();
+    private ArrayList<Assignment> assignments = new ArrayList<>();
     private static ArrayList<Class> classesAll = new ArrayList<>();
     private String name;
     private String year;
@@ -25,10 +26,36 @@ public class Class {
         return classesAll;
     }
 
+    public ArrayList<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public ArrayList<Student> getUsersInClass() {
+        return usersInClass;
+    }
+
+    public void addAssignment(Assignment a) {
+        assignments.add(a);
+    }
+
     public String getName() {
         return name;
     }
 
-    
+    public static Class findClass(String user) {
+        for (Class c : classesAll) {
+            if (c.getId().equalsIgnoreCase(user)) {
+                return c;
+            }
+        }
+        return null;
+      }
+
+    public String getId() {
+        return id;
+    }    
+
+
+      
 
 }

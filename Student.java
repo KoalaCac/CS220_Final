@@ -103,11 +103,18 @@ public class Student {
   }
 
   public double getGpa() {
-    double sum = 0;
-    for (double g : grades) {
-      sum += (g / 100) * 4;
+    double finsum = 0;
+    for (Class c : classesEnrolled) {
+      double asum = 0;
+      for (Assignment a : c.getAssignments()) {
+        asum = asum + a.getGradesMap().get(this);
+      }
+      finsum = finsum + (asum / c.getAssignments().size());
     }
-    return sum / grades.size();
+    for (double g : grades) {
+      finsum += (g / 100) * 4;
+    }
+    return finsum / grades.size();
   }
 
 

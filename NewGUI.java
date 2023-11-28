@@ -3,11 +3,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.*;
+import java.util.ArrayList;
 
 public class NewGUI implements ActionListener {
     
     JFrame frame;
     JPanel panel;
+    JScrollPane scrollPane;
 
     public NewGUI(String selectedItem) {
 
@@ -16,6 +18,10 @@ public class NewGUI implements ActionListener {
         frame.setSize(700,700);
         frame.setLocationRelativeTo(null);
         frame.add(panel);
+
+        scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setSize(700, 500);
+        frame.add(scrollPane);
 
         JFrame success = new JFrame("Message");
         success.setSize(600,600);
@@ -61,12 +67,13 @@ public class NewGUI implements ActionListener {
                 panel.add(textArea);
 
                 JButton enter = new JButton("Enter");
-                enter.setBounds(20,400,150,25);
+                enter.setBounds(20,600,150,25);
                 panel.add(enter);
 
                 enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         new Announcement(Student.getAsUser().getId(), textArea.getText(), dateField.getText());
+                        frame.dispose();
                         new HomeGUI();
                         JOptionPane.showMessageDialog(success, selectedItem + " created!");
                         
@@ -74,7 +81,7 @@ public class NewGUI implements ActionListener {
                 });
             }
             if (selectedItem.equals("Assignment")) {
-                JLabel textLabel = new JLabel("Class:");
+                JLabel textLabel = new JLabel("Class ID:");
                 textLabel.setBounds(20, 130, 200, 30);
                 textLabel.setVerticalAlignment(JLabel.TOP);
                 textLabel.setFont(new Font("Monospaced", Font.PLAIN, 20));
@@ -94,13 +101,17 @@ public class NewGUI implements ActionListener {
                 nameField.setBounds(20,280,200,30);
                 panel.add(nameField);
 
+                
+
+               
                 JButton enter = new JButton("Enter");
-                enter.setBounds(20,330,150,25);
+                enter.setBounds(20,600,150,25);
                 panel.add(enter);
 
                 enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        new Assignment(textField.getText(), nameField.getText(), 0, dateField.getText());
+                        Class.findClass(textField.getText()).addAssignment(new Assignment(Class.findClass(textField.getText()), nameField.getText(), 0, dateField.getText()));
+                        frame.dispose();
                         new HomeGUI();
                         JOptionPane.showMessageDialog(success, selectedItem + " created!");
                     }
@@ -151,13 +162,39 @@ public class NewGUI implements ActionListener {
             semesterField.setBounds(20,390,200,30);
             panel.add(semesterField);
 
+            JLabel usersLabel = new JLabel("Add Users");
+                usersLabel.setBounds(20, 440, 200, 30);
+                usersLabel.setVerticalAlignment(JLabel.TOP);
+                usersLabel.setFont(new Font("Monospaced", Font.PLAIN, 20));
+                panel.add(usersLabel);
+            int i = 0;
+            for (Student s : Student.getStudentList()) {
+                JToggleButton toggle = new JToggleButton(s.getId().toUpperCase());
+                toggle.setBounds(20 + ((i % 4) * 150), 490 + ((i / 4) * 50), 140, 25);
+                panel.add(toggle);
+                toggle.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (toggle.isSelected()) {
+
+                        }
+                    }
+                });
+
+
+                i++;
+            }
+
+            panel.setPreferredSize(new Dimension(700, (i * 25) + 300));
+
+
             JButton enter = new JButton("Enter");
-            enter.setBounds(20,440,150,25);
+            enter.setBounds(400,390,150,25);
             panel.add(enter);
 
             enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         new Class(nameField.getText(), yearField.getText(), semesterField.getText(), idField.getText());
+                        frame.dispose();
                         new HomeGUI();
                         JOptionPane.showMessageDialog(success, selectedItem + " created!");
                     }

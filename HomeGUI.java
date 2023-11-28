@@ -82,7 +82,7 @@ public class HomeGUI implements ActionListener {
         arrGrades.add(98.3);
         Student.getAsUser().setGrades(arrGrades);
 
-        Assignment as1 = new Assignment("COMPSCI220", "Java Collections Framework Quiz", 0);
+        //Assignment as1 = new Assignment("COMPSCI220", "Java Collections Framework Quiz", 0);
         
 
         JLabel titleAnnounce = new JLabel("Announcements");

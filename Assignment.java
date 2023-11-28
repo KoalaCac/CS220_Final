@@ -1,33 +1,38 @@
 import java.time.*;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Assignment extends Event {
 
     private double grade; 
-    private String whichClass;
+    private Class assignClass;
     private String name;
-    private ArrayList<Assignment> assignments = new ArrayList<Assignment>();
+    private static ArrayList<Assignment> assignments = new ArrayList<Assignment>();
+    private HashMap<Student, Double> gradesMap = new HashMap<>();
     
-    public Assignment(String whichClass, String name) {
+    public Assignment(Class assignClass, String name) {
         super();
-        this.whichClass = whichClass;
+        this.assignClass = assignClass;
         this.name = name;
         assignments.add(this);
+        for (Student s : assignClass.getUsersInClass()) {
+            gradesMap.put(s,0.0);
+        }
+        
     }
 
 
-    public Assignment(String whichClass, String name, double grade) {
+    public Assignment(Class assignClass, String name, double grade) {
         super();
-        this.whichClass = whichClass;
+        this.assignClass = assignClass;
         this.name = name;
         this.grade = grade;
         assignments.add(this);
     }
 
-    public Assignment(String whichClass, String name, double grade, String dateCreated) {
+    public Assignment(Class assignClass, String name, double grade, String dateCreated) {
         super();
         setDateCreated(LocalDate.parse(dateCreated));
-        this.whichClass = whichClass;
+        this.assignClass = assignClass;
         this.name = name;
         this.grade = grade;
         assignments.add(this);
@@ -41,12 +46,19 @@ public class Assignment extends Event {
         this.grade = grade;
     }
 
-    public String getWhichClass() {
-        return whichClass;
+    public Class getassignClass() {
+        return assignClass;
     }
 
-    public void setWhichClass(String whichClass) {
-        this.whichClass = whichClass;
+    
+
+    public HashMap<Student, Double> getGradesMap() {
+        return gradesMap;
+    }
+
+
+    public void setassignClass(Class assignClass) {
+        this.assignClass = assignClass;
     }
 
     public String getName() {
@@ -59,7 +71,7 @@ public class Assignment extends Event {
 
     @Override
     public String toString() {
-        return whichClass + " " +  name + ": " + grade;
+        return assignClass + " " +  name + ": " + grade;
     }
 
 
