@@ -110,7 +110,7 @@ public class HomeGUI implements ActionListener {
 
         yLevel = 0;
         System.out.println(Class.getClassesAll().size());
-        for (Class c : Class.getClassesAll()) {
+        for (Class c : Student.getAsUser().getClassesEnrolled()) {
             System.out.println("1");
             JLabel currentGrade = new JLabel(c.toString());
             currentGrade.setFont(new Font("Monospaced", Font.PLAIN, 15));
@@ -121,6 +121,12 @@ public class HomeGUI implements ActionListener {
             yLevel += 60;
         }
 
+
+        JButton attButton = new JButton("Edit Attendance");
+        attButton.setActionCommand(Actions.ATTENDANCE.name());
+        attButton.setBounds(650, yLevel + 100, 150, 25);
+        attButton.addActionListener(this);
+        panel.add(attButton);
         
         frame.setVisible(true);
 
@@ -155,6 +161,9 @@ public class HomeGUI implements ActionListener {
                     
                 }
                 break;
+            case ATTENDANCE:
+                frame.dispose();
+                new AttendanceGUI();
             default:
                 break;
         }

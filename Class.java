@@ -30,6 +30,14 @@ public class Class {
         return assignments;
     }
 
+    public void addUserToClass(Student stu) {
+        usersInClass.add(stu);
+    }
+
+    public void setUsersInClass(ArrayList<Student> usersInClass) {
+        this.usersInClass = usersInClass;
+    }
+
     public ArrayList<Student> getUsersInClass() {
         return usersInClass;
     }

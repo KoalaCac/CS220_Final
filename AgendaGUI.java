@@ -110,7 +110,16 @@ public class AgendaGUI implements ActionListener {
             cellVal = "<html>" + i + "<br/>";
             for (Event e : Event.getEventList()) {
                 if (e.getDateCreated().toString().equals(String.format("%02d", currentDate.getYear()) + "-" + String.format("%02d", currentDate.getMonthValue()) + "-" + String.format("%02d", i))) {
-                    cellVal = cellVal + e.toString() + "<br/>";
+                    if (e instanceof Announcement) {
+                        cellVal = cellVal + e.toString() + "<br/>";
+                    }
+                    else {
+                        for (Class c : Student.getAsUser().getClassesEnrolled()) {
+                            if (((Assignment) e).getAssignClass().equals(c)) {
+                                cellVal = cellVal + e.toString() + "<br/>";
+                            }
+                        }
+                    }   
                 }
             }
             tableModel.setValueAt(cellVal + "<html>", row, col); 

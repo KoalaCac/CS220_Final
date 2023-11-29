@@ -75,6 +75,11 @@ public class Assignment extends Event {
     }
 
 
+    public Class getAssignClass() {
+        return assignClass;
+    }
+
+
 
     
 }

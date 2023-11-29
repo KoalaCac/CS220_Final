@@ -39,7 +39,6 @@ public class Announcement extends Event {
         return user.getName() + " sent an announcement";
     }
 
-
     
     
 

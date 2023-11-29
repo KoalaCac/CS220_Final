@@ -163,10 +163,11 @@ public class NewGUI implements ActionListener {
             panel.add(semesterField);
 
             JLabel usersLabel = new JLabel("Add Users");
-                usersLabel.setBounds(20, 440, 200, 30);
-                usersLabel.setVerticalAlignment(JLabel.TOP);
-                usersLabel.setFont(new Font("Monospaced", Font.PLAIN, 20));
-                panel.add(usersLabel);
+            usersLabel.setBounds(20, 440, 200, 30);
+            usersLabel.setVerticalAlignment(JLabel.TOP);
+            usersLabel.setFont(new Font("Monospaced", Font.PLAIN, 20));
+            panel.add(usersLabel);
+            ArrayList<Student> temp = new ArrayList<>();
             int i = 0;
             for (Student s : Student.getStudentList()) {
                 JToggleButton toggle = new JToggleButton(s.getId().toUpperCase());
@@ -175,7 +176,7 @@ public class NewGUI implements ActionListener {
                 toggle.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if (toggle.isSelected()) {
-
+                            temp.add(Student.findUser(toggle.getText()));
                         }
                     }
                 });
@@ -193,7 +194,11 @@ public class NewGUI implements ActionListener {
 
             enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        new Class(nameField.getText(), yearField.getText(), semesterField.getText(), idField.getText());
+                        Class createdC = new Class(nameField.getText(), yearField.getText(), semesterField.getText(), idField.getText());
+                        createdC.setUsersInClass(temp);
+                        for (Student s : temp) {
+                            s.addClass(createdC);
+                        }
                         frame.dispose();
                         new HomeGUI();
                         JOptionPane.showMessageDialog(success, selectedItem + " created!");

@@ -1,6 +1,10 @@
 
 import java.io.*;
-import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.text.SimpleDateFormat;
 
 public class Student {
   private String id;
@@ -11,7 +15,8 @@ public class Student {
   private static Student asUser;
   private static ArrayList<Student> studentList = new ArrayList<>();
   private ArrayList<Double> grades = new ArrayList<>(); 
-  private ArrayList<Class> classesEnrolled = Class.getClassesAll(); //Change soon
+  private ArrayList<Class> classesEnrolled = new ArrayList<>();
+  private HashMap<Date, Boolean> attendanceData = new HashMap<>();
   
 
   public Student(String name, int grade, String email, String pass) throws IOException {
@@ -44,6 +49,10 @@ public class Student {
 
   public String getId() {
     return id;
+  }
+
+  public void addClass(Class c) {
+    classesEnrolled.add(c);
   }
 
   public void setId(String id) {
@@ -118,5 +127,13 @@ public class Student {
   }
 
 
+
+  public HashMap<Date, Boolean> getAttendanceData() {
+    return attendanceData;
+  }
+
+  public void updateAtt(Date date, boolean isPresent) {
+    attendanceData.put(date, isPresent);
+  }
 
 }
