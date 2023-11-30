@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import java.time.*;
 import java.text.SimpleDateFormat;
 
 public class Student {
@@ -16,7 +17,7 @@ public class Student {
   private static ArrayList<Student> studentList = new ArrayList<>();
   private ArrayList<Double> grades = new ArrayList<>(); 
   private ArrayList<Class> classesEnrolled = new ArrayList<>();
-  private HashMap<Date, Boolean> attendanceData = new HashMap<>();
+  private HashMap<LocalDate, Boolean> attendanceData = new HashMap<>();
   
 
   public Student(String name, int grade, String email, String pass) throws IOException {
@@ -128,12 +129,20 @@ public class Student {
 
 
 
-  public HashMap<Date, Boolean> getAttendanceData() {
+  public HashMap<LocalDate, Boolean> getAttendanceData() {
     return attendanceData;
   }
 
-  public void updateAtt(Date date, boolean isPresent) {
+  public void updateAtt(LocalDate date, Boolean isPresent) {
     attendanceData.put(date, isPresent);
+  }
+
+  public String attendanceToString() {
+    String result = "";
+    for (Map.Entry<LocalDate, Boolean> set : attendanceData.entrySet()) {
+      result = result + set.getKey() + ": " + ((set.getValue()) ? "Here" : "Absent") + "<br/>";
+    }
+    return "<html>" + result + "<html>";
   }
 
 }

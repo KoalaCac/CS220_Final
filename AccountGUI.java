@@ -3,6 +3,8 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Map;
 import java.awt.event.*;
 
 public class AccountGUI implements ActionListener {
@@ -56,11 +58,37 @@ public class AccountGUI implements ActionListener {
         emailInfo.setVerticalAlignment(JLabel.TOP);
         panel.add(emailInfo);
 
+        JLabel attendanceInfo = new JLabel();
+        String formatString = "";
+        for (Map.Entry<LocalDate, Boolean> set : Student.getAsUser().getAttendanceData().entrySet()) {
+            if (set.getValue() == false) {
+                formatString = formatString + set.getKey() + ": Absent" + "<br/>";
+            }
+            
+        }
+        attendanceInfo.setText("<html>Absent Days:<br/>" + formatString + "<html>");
+        attendanceInfo.setFont(new Font("Monospaced", Font.PLAIN, 15));
+        attendanceInfo.setBounds(50, 380, 500, 200);
+        attendanceInfo.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(), BorderFactory.createLoweredBevelBorder()));
+        attendanceInfo.setVerticalAlignment(JLabel.TOP);
+        panel.add(attendanceInfo);
+
+
         JButton button0 = new JButton("Back");
         button0.setBounds(0, 0, 100, 25);
         button0.setVerticalAlignment(JLabel.TOP);
         button0.addActionListener(this);
         panel.add(button0);
+
+        JButton reportButton =  new JButton("Generate Personal Report");
+        reportButton.setVerticalAlignment(JLabel.TOP);
+        reportButton.setBounds(350, 70, 200, 25);
+        reportButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+        panel.add(reportButton);
 
         frame.setVisible(true);
     }

@@ -1,16 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
-public class AttendanceGUI {
+public class AttendanceGUI implements ActionListener {
 
         JFrame frame;
         JPanel panel;
         JLabel dateLabel;
         int monthInd;
+        JPanel buttonsPanel;
 
 
     public AttendanceGUI() {
@@ -25,47 +27,38 @@ public class AttendanceGUI {
 
 
         JPanel header = new JPanel();
-        JPanel buttonsPanel = new JPanel();
-        JButton nextMonth = new JButton(">");
-        JButton lastMonth = new JButton("<");
+        buttonsPanel = new JPanel();
+        JButton nextDay = new JButton(">");
         dateLabel = new JLabel("", SwingConstants.CENTER);
+        JButton lastDay = new JButton("<");
+        
 
-        header.add(lastMonth);
-        header.add(nextMonth);
+        header.add(lastDay);
+        header.add(nextDay);
         header.add(dateLabel);
         panel.add(header, BorderLayout.NORTH);
         panel.add(buttonsPanel, BorderLayout.CENTER);
 
         updateCal(0);
         
-        int i = 0;
-        for (Student stu : Student.getStudentList()) {
-            JCheckBox checkBox = new JCheckBox(stu.getName());
-            checkBox.setFont(new Font("Arial", Font.PLAIN, 20));
-            
-            checkBox.setBounds(10 + (150 * (i % 6)), 100 + (50 * (i / 6)), 150, 25);
-            checkBox.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    
-                }
-            });
-            buttonsPanel.add(checkBox);
-            i++;
-        }
+        
 
-        lastMonth.addActionListener(new ActionListener() {
+        lastDay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateCal(monthInd-1);
             }
         });
 
-        nextMonth.addActionListener(new ActionListener() {
+        nextDay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateCal(monthInd+1);
             }
         });
 
-        
+        JButton button0 = new JButton("Back");
+        button0.addActionListener(this);
+        button0.setBounds(0,0, 125, 25);
+        header.add(button0);
         
 
 
@@ -75,15 +68,43 @@ public class AttendanceGUI {
 
     public void updateCal(int change) {
         monthInd = change;
-        LocalDate currentDate = LocalDate.now().plusMonths(change);
+        buttonsPanel.removeAll();
+        LocalDate currentDate = LocalDate.now().plusDays(change);
         YearMonth yearMonth = YearMonth.of(currentDate.getYear(), currentDate.getMonth());
         String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
-        String monthYearText = months[currentDate.getMonthValue() - 1] + " " + currentDate.getYear();
+
+
+        int i = 0;
+        for (Student stu : Student.getStudentList()) {
+            JCheckBox checkBox = new JCheckBox(stu.getName());
+            checkBox.setFont(new Font("Arial", Font.PLAIN, 20));
+            checkBox.setBounds(10 + (150 * (i % 6)), 100 + (50 * (i / 6)), 150, 25);
+            checkBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (checkBox.isSelected()) {
+                        stu.updateAtt(currentDate, true);
+                    }
+                    else {
+                        stu.updateAtt(currentDate, false);
+                    }
+                }
+            });
+            buttonsPanel.add(checkBox);
+            i++;
+        }
+
+
+
+        String monthYearText = months[currentDate.getMonthValue() - 1] + " " + currentDate.getDayOfMonth() + " " + currentDate.getYear();
         dateLabel.setText(monthYearText);
     }
 
-
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        frame.dispose();
+        new HomeGUI();
+    }
 
 
 }

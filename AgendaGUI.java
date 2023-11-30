@@ -107,7 +107,13 @@ public class AgendaGUI implements ActionListener {
         int row = 0;
         int col = firstDay-1;
         for (int i = 0; i <= yearMonth.lengthOfMonth(); i++) {
-            cellVal = "<html>" + i + "<br/>";
+            try {
+                cellVal = "<html>" + i + "<br/>" + (Student.getAsUser().getAttendanceData().get(currentDate.withDayOfMonth(i)) ? "Here" : "Absent") + "<br/>";
+            } catch (NullPointerException e) {
+                cellVal = "<html>" + i + "<br/>";
+            } catch (DateTimeException e) {
+                cellVal = "<html>" + i + "<br/>";
+            }
             for (Event e : Event.getEventList()) {
                 if (e.getDateCreated().toString().equals(String.format("%02d", currentDate.getYear()) + "-" + String.format("%02d", currentDate.getMonthValue()) + "-" + String.format("%02d", i))) {
                     if (e instanceof Announcement) {
@@ -122,7 +128,9 @@ public class AgendaGUI implements ActionListener {
                     }   
                 }
             }
-            tableModel.setValueAt(cellVal + "<html>", row, col); 
+            if (i != 0) {
+                tableModel.setValueAt(cellVal + "<html>", row, col); 
+            }
             table.getColumnModel().getColumn(col).setCellRenderer(centerRenderer);
             table.setRowHeight(row, 100);
             col++;
