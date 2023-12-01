@@ -2,11 +2,10 @@ import java.awt.event.ActionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
-import java.io.*;
 
 public class GradesGUI implements ActionListener{
     
-    private static int gradeInd;
+    private static Class classSelected;
     private JFrame frame;
     JButton button0;
 
@@ -33,7 +32,13 @@ public class GradesGUI implements ActionListener{
             JButton button = new JButton(c.getName());
             button.setBounds(110 , yLevel + 100, 250, 50);
             titleLabel.setVerticalAlignment(JLabel.TOP);
-            button.addActionListener(this);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    classSelected = c;
+                    new GradesInfoGUI();
+                }
+            });
             panel.add(button);
             yLevel += 50;
         }
@@ -52,23 +57,12 @@ public class GradesGUI implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton clickedButton = (JButton) e.getSource();
-        if (e.getSource().equals(button0)) {
             frame.dispose();
             new HomeGUI();
-        }
-        for (int i = 0; i < Student.getAsUser().getClassesEnrolled().size(); i++) {
-            if (clickedButton.getText().equals(Student.getAsUser().getClassesEnrolled().get(i).getName())) {
-                gradeInd = i;
-                new GradesInfoGUI();
-            }
-        }
-        
-        
     }
 
-    public static int getGradeInd() {
-        return gradeInd;
+    public static Class getClassSelected() {
+        return classSelected;
     }
 
 

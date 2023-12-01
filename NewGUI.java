@@ -110,7 +110,7 @@ public class NewGUI implements ActionListener {
 
                 enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        Class.findClass(textField.getText()).addAssignment(new Assignment(Class.findClass(textField.getText()), nameField.getText(), 0, dateField.getText()));
+                        Class.findClass(textField.getText()).addAssignment(new Assignment(Class.findClass(textField.getText()), nameField.getText(), dateField.getText()));
                         frame.dispose();
                         new HomeGUI();
                         JOptionPane.showMessageDialog(success, selectedItem + " created!");

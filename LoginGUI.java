@@ -86,10 +86,12 @@ public class LoginGUI implements ActionListener {
         while ((line = br.readLine()) != null) {
             String[] token = line.split(",");
             if (user.equals(token[0]) && pass.equals(token[4])) {
+                br.close();
                 Student.setAsUser(user);
                 return true;
             }
         }
+        br.close();
         return false;
     }
 

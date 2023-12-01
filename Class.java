@@ -1,8 +1,9 @@
-import java.util.ArrayList;
+import java.util.*;
 
 public class Class {
     
     private ArrayList<Student> usersInClass = new ArrayList<>();
+    private HashMap<Student, Double> grades; 
     private ArrayList<Assignment> assignments = new ArrayList<>();
     private static ArrayList<Class> classesAll = new ArrayList<>();
     private String name;
@@ -15,6 +16,7 @@ public class Class {
         this.year = year;
         this.semester = semester;
         this.id = id;
+        grades = new HashMap<>();
         classesAll.add(this);
     }
 
@@ -24,6 +26,20 @@ public class Class {
 
     public static ArrayList<Class> getClassesAll() {
         return classesAll;
+    }
+
+    
+
+    public void setGrades(HashMap<Student, Double> grades) {
+        this.grades = grades;
+    }
+
+    public HashMap<Student, Double> getGrades() {
+        return grades;
+    }
+
+    public void putGrades(Student stu, Double dou) {
+        grades.put(stu, dou);        
     }
 
     public ArrayList<Assignment> getAssignments() {
@@ -63,7 +79,25 @@ public class Class {
         return id;
     }    
 
-
+    public static void recalculateGrades() {
+        for (Class c : classesAll) {
+            c.setGrades(new HashMap<>());
+            for (Student s : c.getUsersInClass()) {
+                double sum = 0;
+                for (Assignment a : c.getAssignments()) {
+                    sum = sum + a.getGradesMap().get(s);
+                }
+                if (c.getAssignments().size() > 0) {
+                    sum = sum / c.getAssignments().size();
+                    s.addGrades(sum);
+                    System.out.println(s);
+                    System.out.println(sum);
+                    c.putGrades(s, sum);
+                }
+                System.out.println("Succeed");
+            }
+        }
+    }
       
 
 }

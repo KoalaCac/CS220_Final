@@ -1,11 +1,7 @@
 
 import java.io.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
 import java.time.*;
-import java.text.SimpleDateFormat;
 
 public class Student {
   private String id;
@@ -14,8 +10,8 @@ public class Student {
   private String email;
   private String pass;
   private static Student asUser;
+  private ArrayList<Double> grades = new ArrayList<>();
   private static ArrayList<Student> studentList = new ArrayList<>();
-  private ArrayList<Double> grades = new ArrayList<>(); 
   private ArrayList<Class> classesEnrolled = new ArrayList<>();
   private HashMap<LocalDate, Boolean> attendanceData = new HashMap<>();
   
@@ -108,8 +104,8 @@ public class Student {
     return grades;
   }
 
-  public void setGrades(ArrayList<Double> grades) {
-    this.grades = grades;
+  public void addGrades(double g) {
+    grades.add(g);
   }
 
   public double getGpa() {
@@ -124,7 +120,7 @@ public class Student {
     for (double g : grades) {
       finsum += (g / 100) * 4;
     }
-    return finsum / grades.size();
+    return finsum / classesEnrolled.size();
   }
 
 

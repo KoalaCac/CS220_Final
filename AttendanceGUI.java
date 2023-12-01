@@ -1,10 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.YearMonth;
 
 public class AttendanceGUI implements ActionListener {
 
@@ -70,7 +68,6 @@ public class AttendanceGUI implements ActionListener {
         monthInd = change;
         buttonsPanel.removeAll();
         LocalDate currentDate = LocalDate.now().plusDays(change);
-        YearMonth yearMonth = YearMonth.of(currentDate.getYear(), currentDate.getMonth());
         String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
 

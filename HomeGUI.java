@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
 
 public class HomeGUI implements ActionListener {
 
@@ -21,6 +20,7 @@ public class HomeGUI implements ActionListener {
 
     public HomeGUI() {
 
+        Class.recalculateGrades();
         panel = new JPanel(null);
         frame = new JFrame("Welcome " + Student.getAsUser().getName());
         frame.setSize(1000,700);
@@ -73,14 +73,7 @@ public class HomeGUI implements ActionListener {
         panel.add(button6);
 
 
-        //Debug
-        ArrayList<Double> arrGrades = new ArrayList<>();
-        arrGrades.add(98.7);
-        arrGrades.add(98.6);
-        arrGrades.add(98.5);
-        arrGrades.add(98.4);
-        arrGrades.add(98.3);
-        Student.getAsUser().setGrades(arrGrades);
+        
 
         //Assignment as1 = new Assignment("COMPSCI220", "Java Collections Framework Quiz", 0);
         
