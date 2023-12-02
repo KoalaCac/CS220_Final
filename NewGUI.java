@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.*;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class NewGUI implements ActionListener {
@@ -72,10 +73,20 @@ public class NewGUI implements ActionListener {
 
                 enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        new Announcement(Student.getAsUser().getId(), textArea.getText(), dateField.getText());
-                        frame.dispose();
-                        new HomeGUI();
-                        JOptionPane.showMessageDialog(success, selectedItem + " created!");
+                        try {
+                            if (textArea.getText().equals("") || dateField.getText().equals("")) {
+                                throw new IllegalAccessError();
+                            }
+                            new Announcement(Student.getAsUser().getId(), textArea.getText(), dateField.getText());
+                            frame.dispose();
+                            new HomeGUI();
+                            JOptionPane.showMessageDialog(success, selectedItem + " created!");
+                        } catch (IllegalAccessError iee) {
+                            JOptionPane.showMessageDialog(success, "Error! Some fields not filled out");
+                        } catch (DateTimeParseException dtpe) {
+                            JOptionPane.showMessageDialog(success, "Invalid Date! Use YYYY-MM-DD");
+                        }
+
                         
                     }
                 });
@@ -110,10 +121,22 @@ public class NewGUI implements ActionListener {
 
                 enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        Class.findClass(textField.getText()).addAssignment(new Assignment(Class.findClass(textField.getText()), nameField.getText(), dateField.getText()));
-                        frame.dispose();
-                        new HomeGUI();
-                        JOptionPane.showMessageDialog(success, selectedItem + " created!");
+                        try {
+                            if (textField.getText().equals("") || nameField.getText().equals("") || dateField.getText().equals("")) {
+                                throw new IllegalAccessError();
+                            }
+                            Class.findClass(textField.getText()).addAssignment(new Assignment(Class.findClass(textField.getText()), nameField.getText(), dateField.getText()));
+                            frame.dispose();
+                            new HomeGUI();
+                            JOptionPane.showMessageDialog(success, selectedItem + " created!");
+                        } catch (NullPointerException npe) {
+                            JOptionPane.showMessageDialog(success, "No matching Class ID");
+                        } catch (DateTimeParseException dtpe) {
+                            JOptionPane.showMessageDialog(success, "Invalid Date! Use YYYY-MM-DD");
+                        } catch (IllegalAccessError iee) {
+                            JOptionPane.showMessageDialog(success, "Error! Some fields not filled out");
+                        }
+                        
                     }
                 });
 
@@ -194,14 +217,21 @@ public class NewGUI implements ActionListener {
 
             enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        Class createdC = new Class(nameField.getText(), yearField.getText(), semesterField.getText(), idField.getText());
-                        createdC.setUsersInClass(temp);
-                        for (Student s : temp) {
-                            s.addClass(createdC);
+                        try {
+                            if (nameField.getText().equals("") || yearField.getText().equals("") || semesterField.getText().equals("") || idField.getText().equals("")) {
+                                throw new IllegalAccessError();
+                            }
+                            Class createdC = new Class(nameField.getText(), yearField.getText(), semesterField.getText(), idField.getText());
+                            createdC.setUsersInClass(temp);
+                            for (Student s : temp) {
+                                s.addClass(createdC);
+                            }
+                            frame.dispose();
+                            new HomeGUI();
+                            JOptionPane.showMessageDialog(success, selectedItem + " created!");
+                        } catch(IllegalAccessError iee) {
+                            JOptionPane.showMessageDialog(success, "Error! Some fields not filled out");
                         }
-                        frame.dispose();
-                        new HomeGUI();
-                        JOptionPane.showMessageDialog(success, selectedItem + " created!");
                     }
                 });
 

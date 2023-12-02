@@ -111,16 +111,9 @@ public class Student {
   public double getGpa() {
     double finsum = 0;
     for (Class c : classesEnrolled) {
-      double asum = 0;
-      for (Assignment a : c.getAssignments()) {
-        asum = asum + a.getGradesMap().get(this);
-      }
-      finsum = finsum + (asum / c.getAssignments().size());
+      finsum += c.getGrades().get(this);
     }
-    for (double g : grades) {
-      finsum += (g / 100) * 4;
-    }
-    return finsum / classesEnrolled.size();
+    return ((finsum / classesEnrolled.size()) / 100) * 4;
   }
 
 
@@ -138,7 +131,22 @@ public class Student {
     for (Map.Entry<LocalDate, Boolean> set : attendanceData.entrySet()) {
       result = result + set.getKey() + ": " + ((set.getValue()) ? "Here" : "Absent") + "<br/>";
     }
-    return "<html>" + result + "<html>";
+    return result ;
   }
 
+  public String allDataString() {
+    String result = getAsUser().getName().toUpperCase() + "'S INFO:<br/>";
+    result += "----GRADES---- <br/>";
+    for (Class c : classesEnrolled) {
+      result += String.format(c.getName().toUpperCase() + ": %.2f <br/>" , c.getGrades().get(getAsUser()));
+      for (Assignment a : c.getAssignments()) {
+        result += String.format("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + a.getName() + ": %.2f <br/>" , a.getGradesMap().get(getAsUser()));
+      }
+    }
+    result += "----ATTENDANCE---- <br/>" + getAsUser().attendanceToString();
+    result += "----GPA---- <br/>" + getAsUser().getGpa();
+
+    System.out.println(result);
+    return result ;
+  }
 }

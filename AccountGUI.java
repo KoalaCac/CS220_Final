@@ -83,6 +83,7 @@ public class AccountGUI implements ActionListener {
         reportButton.setBounds(350, 70, 200, 25);
         reportButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                new Announcement(Student.getAsUser().getId(), Student.getAsUser().allDataString(), 20);
                 
             }
         });

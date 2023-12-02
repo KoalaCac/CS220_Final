@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeGUI implements ActionListener {
 
@@ -84,14 +86,15 @@ public class HomeGUI implements ActionListener {
         panel.add(titleAnnounce);
 
         int yLevel = 0;
+        System.out.println(Announcement.getAnnounceList());
         for (Announcement a : Announcement.getAnnounceList()) {
             JLabel currentAnnounce = new JLabel(a.getText());
             currentAnnounce.setFont(new Font("Monospaced", Font.PLAIN, 15));
-            currentAnnounce.setBounds(50, 100 + yLevel, 500, 200);
+            currentAnnounce.setBounds(50, 100 + yLevel, 500, 50 + (15 * (a.getText().length() / (33 - a.getLengthMult()))));
             currentAnnounce.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(), BorderFactory.createLoweredBevelBorder()));
             currentAnnounce.setVerticalAlignment(JLabel.TOP);
             panel.add(currentAnnounce);
-            yLevel += 210;
+            yLevel += currentAnnounce.getHeight() + 10;
         }
 
         panel.setPreferredSize(new Dimension(100, yLevel + 300));
