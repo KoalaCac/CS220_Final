@@ -17,8 +17,8 @@ public class LoginGUI implements ActionListener {
     private static JButton button;
     private static JLabel success;
     
-    JPanel panel;
-    JFrame frame;
+    private JPanel panel;
+    private JFrame frame;
     
     public LoginGUI() throws IOException {
 
@@ -27,47 +27,41 @@ public class LoginGUI implements ActionListener {
         frame.setSize(350,200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        
-        
         frame.add(panel);
-
         panel.setLayout(null);
 
-        userLabel = new JLabel("ID:");
+        userLabel = new JLabel("ID:"); //ID label
         userLabel.setBounds(10, 20, 80, 25);
         panel.add(userLabel);
 
-        userText = new JTextField();
+        userText = new JTextField(); //Enter id text
         userText.setBounds(100, 20, 165, 25);
         panel.add(userText);
 
-        passwordLabel = new JLabel("PASSWORD:");
+        passwordLabel = new JLabel("PASSWORD:"); //Pass label
         passwordLabel.setBounds(10, 50, 80, 25);
         panel.add(passwordLabel);
 
-        passwordText = new JPasswordField();
+        passwordText = new JPasswordField(); //Enter pass text
         passwordText.setBounds(100, 50, 165, 25);
         panel.add(passwordText);
 
-        button = new JButton("Login");
+        button = new JButton("Login"); //Submit info entered
         button.setBounds(10, 80, 80, 25);
         button.addActionListener(this);
         panel.add(button);
         
-        success =  new JLabel("");
+        success =  new JLabel(""); //Instantiate message
         success.setBounds(10, 110, 300, 25);
         panel.add(success);
         
-
         frame.setVisible(true);
-
-
     }
 
     public void actionPerformed(ActionEvent e){
         String user = userText.getText();
         String password = passwordText.getText();
-        if (foundInfoArr(user, password)) {
+        if (foundInfoArr(user, password)) { //If info matches to an existing 
             success.setText("Login Successful");
             frame.dispose();
             new HomeGUI();
@@ -75,11 +69,9 @@ public class LoginGUI implements ActionListener {
         else {
             success.setText("Email or password incorrect");
         }
-
-
     }
 
-    public static boolean foundInfo(String user, String pass) throws IOException {
+    public static boolean foundInfo(String user, String pass) throws IOException { //Can be used for further development
         BufferedReader br = new BufferedReader(new FileReader("studentData.csv"));
 
         String line;
@@ -95,7 +87,7 @@ public class LoginGUI implements ActionListener {
         return false;
     }
 
-    public static boolean foundInfoArr(String user, String pass) {
+    public static boolean foundInfoArr(String user, String pass) { //Find username(ID) and password via master student list
         for (Student s : Student.getStudentList()) {
             if (user.equals(s.getId()) && pass.equals(s.getPass())) {
                 Student.setAsUser(user);
@@ -103,10 +95,5 @@ public class LoginGUI implements ActionListener {
             }
         }
         return false;
-    }
-
-    
-
-    
-
+    } 
 }

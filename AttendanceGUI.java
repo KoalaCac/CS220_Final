@@ -6,12 +6,11 @@ import java.time.LocalDate;
 
 public class AttendanceGUI implements ActionListener {
 
-        JFrame frame;
-        JPanel panel;
-        JLabel dateLabel;
-        int monthInd;
-        JPanel buttonsPanel;
-
+        private JFrame frame;
+        private JPanel panel;
+        private JLabel dateLabel;
+        private int monthInd;
+        private JPanel buttonsPanel;
 
     public AttendanceGUI() {
         panel = new JPanel(new BorderLayout());
@@ -21,16 +20,13 @@ public class AttendanceGUI implements ActionListener {
         frame.setLocationRelativeTo(null);
         frame.add(panel);
 
-        
-
-
         JPanel header = new JPanel();
         buttonsPanel = new JPanel();
         JButton nextDay = new JButton(">");
         dateLabel = new JLabel("", SwingConstants.CENTER);
         JButton lastDay = new JButton("<");
         
-
+        //Add to panels
         header.add(lastDay);
         header.add(nextDay);
         header.add(dateLabel);
@@ -39,8 +35,6 @@ public class AttendanceGUI implements ActionListener {
 
         updateCal(0);
         
-        
-
         lastDay.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateCal(monthInd-1);
@@ -53,24 +47,20 @@ public class AttendanceGUI implements ActionListener {
             }
         });
 
+        //Back to home
         JButton button0 = new JButton("Back");
         button0.addActionListener(this);
         button0.setBounds(0,0, 125, 25);
-        header.add(button0);
-        
-
-
+        header.add(button0);    
         
         frame.setVisible(true);
     }
 
-    public void updateCal(int change) {
+    public void updateCal(int change) { //Same idea as agenda, this time adding checkboxes instead of cells
         monthInd = change;
         buttonsPanel.removeAll();
         LocalDate currentDate = LocalDate.now().plusDays(change);
         String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-
-
 
         int i = 0;
         for (Student stu : Student.getStudentList()) {
@@ -80,18 +70,16 @@ public class AttendanceGUI implements ActionListener {
             checkBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if (checkBox.isSelected()) {
-                        stu.updateAtt(currentDate, true);
+                        stu.updateAtt(currentDate, true); //User is here
                     }
                     else {
-                        stu.updateAtt(currentDate, false);
+                        stu.updateAtt(currentDate, false); //User is absent
                     }
                 }
             });
             buttonsPanel.add(checkBox);
             i++;
         }
-
-
 
         String monthYearText = months[currentDate.getMonthValue() - 1] + " " + currentDate.getDayOfMonth() + " " + currentDate.getYear();
         dateLabel.setText(monthYearText);
@@ -102,6 +90,4 @@ public class AttendanceGUI implements ActionListener {
         frame.dispose();
         new HomeGUI();
     }
-
-
 }

@@ -6,11 +6,11 @@ import java.time.*;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
-public class NewGUI implements ActionListener {
+public class NewGUI {
     
-    JFrame frame;
-    JPanel panel;
-    JScrollPane scrollPane;
+    private JFrame frame;
+    private JPanel panel;
+    private JScrollPane scrollPane;
 
     public NewGUI(String selectedItem) {
 
@@ -27,17 +27,19 @@ public class NewGUI implements ActionListener {
         JFrame success = new JFrame("Message");
         success.setSize(600,600);
 
+        //Back to Home, cancel
         JButton back = new JButton("Back");
-                back.setBounds(0,0,100,25);
-                panel.add(back);
+        back.setBounds(0,0,100,25);
+        panel.add(back);
 
-                back.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        frame.dispose();
-                        new HomeGUI();
-                    }
-                });
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new HomeGUI();
+            }
+        });
 
+        //Add components based on what new object you want to create
         if (selectedItem.equals("Announcement") || selectedItem.equals("Assignment")) {
             JLabel dateLabel = new JLabel("Date Created:");
             dateLabel.setBounds(20, 40, 200, 30);
@@ -48,8 +50,6 @@ public class NewGUI implements ActionListener {
             JTextField dateField = new JTextField(LocalDate.now().toString());
             dateField.setBounds(20, 90, 200,30);
             panel.add(dateField);
-
-            
 
             if (selectedItem.equals("Announcement")) {
                 JLabel textLabel = new JLabel("Text:");
@@ -67,6 +67,7 @@ public class NewGUI implements ActionListener {
                 textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 panel.add(textArea);
 
+                //Submit info, get an error or success
                 JButton enter = new JButton("Enter");
                 enter.setBounds(20,600,150,25);
                 panel.add(enter);
@@ -81,13 +82,11 @@ public class NewGUI implements ActionListener {
                             frame.dispose();
                             new HomeGUI();
                             JOptionPane.showMessageDialog(success, selectedItem + " created!");
-                        } catch (IllegalAccessError iee) {
+                        } catch (IllegalAccessError iee) { //Input Validation
                             JOptionPane.showMessageDialog(success, "Error! Some fields not filled out");
-                        } catch (DateTimeParseException dtpe) {
+                        } catch (DateTimeParseException dtpe) { //Input Validation
                             JOptionPane.showMessageDialog(success, "Invalid Date! Use YYYY-MM-DD");
                         }
-
-                        
                     }
                 });
             }
@@ -112,9 +111,7 @@ public class NewGUI implements ActionListener {
                 nameField.setBounds(20,280,200,30);
                 panel.add(nameField);
 
-                
-
-               
+               //Submit info, get an error or success
                 JButton enter = new JButton("Enter");
                 enter.setBounds(20,600,150,25);
                 panel.add(enter);
@@ -129,18 +126,16 @@ public class NewGUI implements ActionListener {
                             frame.dispose();
                             new HomeGUI();
                             JOptionPane.showMessageDialog(success, selectedItem + " created!");
-                        } catch (NullPointerException npe) {
+                        } catch (NullPointerException npe) { //Input Validation
                             JOptionPane.showMessageDialog(success, "No matching Class ID");
-                        } catch (DateTimeParseException dtpe) {
+                        } catch (DateTimeParseException dtpe) { //Input Validation
                             JOptionPane.showMessageDialog(success, "Invalid Date! Use YYYY-MM-DD");
-                        } catch (IllegalAccessError iee) {
+                        } catch (IllegalAccessError iee) { //Input Validation
                             JOptionPane.showMessageDialog(success, "Error! Some fields not filled out");
                         }
                         
                     }
                 });
-
-
             }
         }
 
@@ -185,6 +180,7 @@ public class NewGUI implements ActionListener {
             semesterField.setBounds(20,390,200,30);
             panel.add(semesterField);
 
+            //Add a button for each user in order to add them to the class
             JLabel usersLabel = new JLabel("Add Users");
             usersLabel.setBounds(20, 440, 200, 30);
             usersLabel.setVerticalAlignment(JLabel.TOP);
@@ -199,18 +195,16 @@ public class NewGUI implements ActionListener {
                 toggle.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if (toggle.isSelected()) {
-                            temp.add(Student.findUser(toggle.getText()));
+                            temp.add(s);
                         }
                     }
                 });
-
-
                 i++;
             }
 
             panel.setPreferredSize(new Dimension(700, (i * 25) + 300));
 
-
+            //Submit info, get an error or success
             JButton enter = new JButton("Enter");
             enter.setBounds(400,390,150,25);
             panel.add(enter);
@@ -218,31 +212,24 @@ public class NewGUI implements ActionListener {
             enter.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         try {
+                            //If any field is empty, throw an error
                             if (nameField.getText().equals("") || yearField.getText().equals("") || semesterField.getText().equals("") || idField.getText().equals("")) {
                                 throw new IllegalAccessError();
                             }
                             Class createdC = new Class(nameField.getText(), yearField.getText(), semesterField.getText(), idField.getText());
                             createdC.setUsersInClass(temp);
-                            for (Student s : temp) {
+                            for (Student s : temp) { //Add the class to each selected user's enrolled classes
                                 s.addClass(createdC);
                             }
                             frame.dispose();
                             new HomeGUI();
-                            JOptionPane.showMessageDialog(success, selectedItem + " created!");
-                        } catch(IllegalAccessError iee) {
+                            JOptionPane.showMessageDialog(success, selectedItem + " created!"); //Success message
+                        } catch(IllegalAccessError iee) { //Input Validation
                             JOptionPane.showMessageDialog(success, "Error! Some fields not filled out");
                         }
                     }
                 });
-
-
         }
-        
-
-
         frame.setVisible(true);
-    }
-
-    public void actionPerformed(ActionEvent e) {
     }
 }

@@ -3,15 +3,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
 
 public class HomeGUI implements ActionListener {
 
     private JFrame frame;
     private JPanel panel;
 
-    private enum Actions {
+    private enum Actions { //Creates constants to distinguish buttons pressed
         ACCOUNTINFO,
         GRADES,
         ATTENDANCE,
@@ -22,7 +20,7 @@ public class HomeGUI implements ActionListener {
 
     public HomeGUI() {
 
-        Class.recalculateGrades();
+        Class.recalculateGrades(); //Update grades
         panel = new JPanel(null);
         frame = new JFrame("Welcome " + Student.getAsUser().getName());
         frame.setSize(1000,700);
@@ -33,7 +31,7 @@ public class HomeGUI implements ActionListener {
         JScrollPane scrollBar = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frame.add(scrollBar);
         
-        
+        //Ln 37-65 adds buttons to the top to view data
         JButton button = new JButton("Your account");
         button.setActionCommand(Actions.ACCOUNTINFO.name());
         button.setBounds(50, 10, 150, 25);
@@ -59,34 +57,26 @@ public class HomeGUI implements ActionListener {
         button4.addActionListener(this);
         panel.add(button4);
 
+        //Create a new object via GUI
         String[] choices = { "New...", "Announcement", "Assignment", "Class" }; 
         JComboBox<String> button6 = new JComboBox<String>(choices);
         button6.setBounds(230, 10, 150, 25);
-
         button6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = (String) button6.getSelectedItem();
                 if (!selectedItem.equals("New...")) {new NewGUI(selectedItem); frame.dispose();}
             }
         });
-
-
-
         panel.add(button6);
 
-
-        
-
-        //Assignment as1 = new Assignment("COMPSCI220", "Java Collections Framework Quiz", 0);
-        
-
+        //Title
         JLabel titleAnnounce = new JLabel("Announcements");
         titleAnnounce.setFont(new Font("Monospaced", Font.BOLD, 20));
         titleAnnounce.setBounds(50, 50, 500, 50);
         panel.add(titleAnnounce);
 
+        //Announcements are presented on the left
         int yLevel = 0;
-        System.out.println(Announcement.getAnnounceList());
         for (Announcement a : Announcement.getAnnounceList()) {
             JLabel currentAnnounce = new JLabel(a.getText());
             currentAnnounce.setFont(new Font("Monospaced", Font.PLAIN, 15));
@@ -99,15 +89,15 @@ public class HomeGUI implements ActionListener {
 
         panel.setPreferredSize(new Dimension(100, yLevel + 300));
 
+        //Title
         JLabel titleGrades = new JLabel("Classes");
         titleGrades.setFont(new Font("Monospaced", Font.BOLD, 20));
         titleGrades.setBounds(650, 50, 500, 50);
         panel.add(titleGrades);
 
+        //classes presented on the right
         yLevel = 0;
-        System.out.println(Class.getClassesAll().size());
         for (Class c : Student.getAsUser().getClassesEnrolled()) {
-            System.out.println("1");
             JLabel currentGrade = new JLabel(c.toString());
             currentGrade.setFont(new Font("Monospaced", Font.PLAIN, 15));
             currentGrade.setBounds(650, 100 + yLevel, 600, 50);
@@ -117,7 +107,7 @@ public class HomeGUI implements ActionListener {
             yLevel += 60;
         }
 
-
+        //Button is shown under grades to edit attendance for each user
         JButton attButton = new JButton("Edit Attendance");
         attButton.setActionCommand(Actions.ATTENDANCE.name());
         attButton.setBounds(650, yLevel + 100, 150, 25);
@@ -132,7 +122,7 @@ public class HomeGUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         
-        switch (Actions.valueOf(actionCommand)) {
+        switch (Actions.valueOf(actionCommand)) { //Use enum via switch case
             case ACCOUNTINFO:
                 frame.dispose();
                 try {

@@ -7,9 +7,10 @@ public class GradesGUI implements ActionListener{
     
     private static Class classSelected;
     private JFrame frame;
-    JButton button0;
+    private JButton button0;
 
     public GradesGUI() {
+        //Instantiate Window
         JPanel panel = new JPanel(null);
         frame = new JFrame(Student.getAsUser().getName() + " Grades");
         frame.setSize(500, 500);
@@ -26,7 +27,7 @@ public class GradesGUI implements ActionListener{
         titleLabel.setVerticalAlignment(JLabel.TOP);
         panel.add(titleLabel);
 
-
+        //Create a new button for every class the user is enrolled in
         int yLevel = 0;
         for (Class c : Student.getAsUser().getClassesEnrolled()) {
             JButton button = new JButton(c.getName());
@@ -42,7 +43,8 @@ public class GradesGUI implements ActionListener{
             panel.add(button);
             yLevel += 50;
         }
-
+        
+        //Back to home
         button0 = new JButton("Back");
         button0.setBounds(0, 0, 100, 25);
         button0.setVerticalAlignment(JLabel.TOP);

@@ -8,10 +8,11 @@ import java.awt.event.*;
 public class AccountGUI implements ActionListener {
     
 
-    JFrame frame;
-    JPanel panel;
+    private JFrame frame;
+    private JPanel panel;
 
     public AccountGUI() throws IOException {
+        //Instantiate the window
         panel = new JPanel(null);
         frame = new JFrame(Student.getAsUser().getName() + "'s Account Info");
         frame.setSize(700, 700);
@@ -19,12 +20,13 @@ public class AccountGUI implements ActionListener {
         frame.setLocationRelativeTo(null);
         frame.add(panel);
 
+        //Creates a header above your info
         JLabel title = new JLabel("Your info:");
         title.setFont(new Font("Monospaced", Font.BOLD, 20));
         title.setBounds(50, 50, 500, 50);
         panel.add(title);
 
-        
+        //Shows a box containing the current user's name
         JLabel nameInfo = new JLabel("<html> User Name:<br/>" + Student.getAsUser().getName() + "<html>");
         nameInfo.setFont(new Font("Monospaced", Font.PLAIN, 15));
         nameInfo.setBounds(50, 100, 500, 50);
@@ -32,6 +34,7 @@ public class AccountGUI implements ActionListener {
         nameInfo.setVerticalAlignment(JLabel.TOP);
         panel.add(nameInfo);
 
+        //Current user's ID
         JLabel idInfo = new JLabel("<html>User ID:<br/>" + Student.getAsUser().getId() + "<html>");
         idInfo.setFont(new Font("Monospaced", Font.PLAIN, 15));
         idInfo.setBounds(50, 170, 500, 50);
@@ -39,6 +42,8 @@ public class AccountGUI implements ActionListener {
         idInfo.setVerticalAlignment(JLabel.TOP);
         panel.add(idInfo);
 
+        //Current user's grade
+        //If their grade is zero, they are faculty
         JLabel gradeInfo = new JLabel("<html>User Grade:<br/>" + Student.getAsUser().getGrade() + "<html>");
         gradeInfo.setFont(new Font("Monospaced", Font.PLAIN, 15));
         gradeInfo.setBounds(50, 240, 500, 50);
@@ -49,6 +54,7 @@ public class AccountGUI implements ActionListener {
         }
         panel.add(gradeInfo);
 
+        //User's email
         JLabel emailInfo = new JLabel("<html>User Email:<br/>" + Student.getAsUser().getEmail() + "<html>");
         emailInfo.setFont(new Font("Monospaced", Font.PLAIN, 15));
         emailInfo.setBounds(50, 310, 500, 50);
@@ -56,6 +62,7 @@ public class AccountGUI implements ActionListener {
         emailInfo.setVerticalAlignment(JLabel.TOP);
         panel.add(emailInfo);
 
+        //Displays every day current user was set to be absent
         JLabel attendanceInfo = new JLabel();
         String formatString = "";
         for (Map.Entry<LocalDate, Boolean> set : Student.getAsUser().getAttendanceData().entrySet()) {
@@ -71,13 +78,14 @@ public class AccountGUI implements ActionListener {
         attendanceInfo.setVerticalAlignment(JLabel.TOP);
         panel.add(attendanceInfo);
 
-
+        //Go back to Home
         JButton button0 = new JButton("Back");
         button0.setBounds(0, 0, 100, 25);
         button0.setVerticalAlignment(JLabel.TOP);
         button0.addActionListener(this);
         panel.add(button0);
 
+        //Generates a report of grades, attendance, and GPA in anouncements in Home
         JButton reportButton =  new JButton("Generate Personal Report");
         reportButton.setVerticalAlignment(JLabel.TOP);
         reportButton.setBounds(350, 70, 200, 25);

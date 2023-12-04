@@ -11,12 +11,13 @@ public class Student {
   private String pass;
   private static Student asUser;
   private ArrayList<Double> grades = new ArrayList<>();
-  private static ArrayList<Student> studentList = new ArrayList<>();
+  private static ArrayList<Student> studentList = new ArrayList<>(); //Master list
   private ArrayList<Class> classesEnrolled = new ArrayList<>();
   private HashMap<LocalDate, Boolean> attendanceData = new HashMap<>();
   
 
   public Student(String name, int grade, String email, String pass) throws IOException {
+    //Calculate ID
     this.id = name.toLowerCase().substring(name.indexOf(" ") + 1) + name.toLowerCase().substring(0, name.indexOf(" ")) + grade;
     this.name = name;
     this.grade = grade;
@@ -27,7 +28,7 @@ public class Student {
 
   
 
-  public static void printStudents() throws IOException {
+  public static void printStudents() throws IOException { //Print students to studentData.csv
     PrintWriter writeFile = new PrintWriter("studentData.csv");
     for (Student s : studentList) {
       writeFile.println(s.getId() + "," + s.getName() + "," + s.getGrade() + "," + s.getEmail() + "," + s.getPass());
@@ -35,7 +36,7 @@ public class Student {
     writeFile.close();
   }
 
-  public static Student findUser(String user) {
+  public static Student findUser(String user) { //Find user in master list
     for (Student s : studentList) {
         if (s.getId().equalsIgnoreCase(user)) {
             return s;
@@ -84,7 +85,7 @@ public class Student {
     return asUser;
   }
 
-  public static void setAsUser(String asUser) {
+  public static void setAsUser(String asUser) { //set as current logged in user
     for (Student s : studentList) {
           if (s.getId().equalsIgnoreCase(asUser)) {
               Student.asUser = s;
@@ -108,7 +109,7 @@ public class Student {
     grades.add(g);
   }
 
-  public double getGpa() {
+  public double getGpa() { //calculate GPA
     double finsum = 0;
     for (Class c : classesEnrolled) {
       finsum += c.getGrades().get(this);
@@ -126,7 +127,7 @@ public class Student {
     attendanceData.put(date, isPresent);
   }
 
-  public String attendanceToString() {
+  public String attendanceToString() { //Each attendance entry put into string format
     String result = "";
     for (Map.Entry<LocalDate, Boolean> set : attendanceData.entrySet()) {
       result = result + set.getKey() + ": " + ((set.getValue()) ? "Here" : "Absent") + "<br/>";
@@ -134,7 +135,7 @@ public class Student {
     return result ;
   }
 
-  public String allDataString() {
+  public String allDataString() { //Used for generating personal report
     String result = getAsUser().getName().toUpperCase() + "'S INFO:<br/>";
     result += "----GRADES---- <br/>";
     for (Class c : classesEnrolled) {
@@ -146,7 +147,6 @@ public class Student {
     result += "----ATTENDANCE---- <br/>" + getAsUser().attendanceToString();
     result += "----GPA---- <br/>" + getAsUser().getGpa();
 
-    System.out.println(result);
     return result ;
   }
 }

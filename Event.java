@@ -3,7 +3,7 @@ import java.time.*;
 
 public class Event {
     
-    private static ArrayList<Event> eventList = new ArrayList<Event>();
+    private static ArrayList<Event> eventList = new ArrayList<Event>(); //Master list
     private LocalDate dateCreated;
 
     public Event() {
