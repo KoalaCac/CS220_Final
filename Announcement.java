@@ -12,7 +12,7 @@ public class Announcement extends Event {
         super();
         setDateCreated(LocalDate.now()); //If date is not answered, take the current one
         this.lengthMult = lengthMult;
-        this.user = Student.findUser(user); //Convert username to Student
+        this.user = Student.getAsUser(); //Convert username to Student
         this.text = "<html>" + text + "<br/>-" + this.user.getName() + "<html>";
         announceList.add(0, this); //Add to bottom of list, so recent announcements show first when iterating
     }
